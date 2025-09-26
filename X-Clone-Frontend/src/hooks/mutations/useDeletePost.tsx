@@ -57,6 +57,10 @@ export const useDeletePost = (
           });
         });
       }
+
+      // Ensure other feed pages and detail/thread views refresh
+      queryClient.invalidateQueries({ queryKey: ["feed"] });
+      queryClient.removeQueries({ queryKey: ["post", deletedPostId] });
     },
 
     onError: (error) => {

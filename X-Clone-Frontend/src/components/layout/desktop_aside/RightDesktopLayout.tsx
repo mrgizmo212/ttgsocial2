@@ -41,9 +41,11 @@ export function RightDesktopLayout() {
           <AsideContainer>
             <p className="text-xl pl-2 font-bold">You might like</p>
             <div className="w-full flex flex-col pt-4">
-              {topUsers?.map((id) => (
-                <UserSearchResult userId={id} />
-              ))}
+              {topUsers
+                ?.filter((id) => id !== currentUser?.id)
+                .map((id) => (
+                  <UserSearchResult userId={id} />
+                ))}
             </div>
             <p
               className="pl-2 text-(--color-main) hover:cursor-pointer"

@@ -78,17 +78,19 @@ class UsersService:
         return [r[0] for r in rows]
 
     def get_paginated_top_users(self, cursor: int, limit: int) -> dict:
-        # Approximate: order by created_at desc with cursor as timestamp boundary
-        query = select(User.id).order_by(desc(User.created_at)).limit(limit)
-        if cursor:
-            from sqlalchemy import and_
-            query = select(User.id).where(User.created_at <= (cursor)).order_by(desc(User.created_at)).limit(limit)
+        """Return discover users with simple, robust pagination.
+
+        Use descending ID order (newest first). If a cursor is provided, it is
+        treated as the last seen user ID and we fetch IDs strictly less than it.
+        This avoids issues when created_at is NULL for demo users.
+        """
+        base = select(User.id)
+        if cursor and cursor > 0:
+            base = base.where(User.id < cursor)
+        query = base.order_by(desc(User.id)).limit(limit)
+
         ids = [r[0] for r in self.db.execute(query).all()]
-        next_cursor = None
-        if ids and len(ids) == limit:
-            last_user = self.db.get(User, ids[-1])
-            if last_user and last_user.created_at:
-                next_cursor = int(last_user.created_at.timestamp() * 1000)
+        next_cursor = ids[-1] if ids and len(ids) == limit else None
         return {"users": ids, "nextCursor": next_cursor}
 
     def update_user_profile(

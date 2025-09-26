@@ -9,14 +9,14 @@ type UserPage = {
 export function useInfiniteUsers() {
   return useInfiniteQuery<UserPage, Error>({
     queryKey: ["discoverUsers"],
-    queryFn: async ({ pageParam = Date.now() + 60_000 }) => {
+    queryFn: async ({ pageParam = 0 }) => {
       if (!BACKEND_CONFIGURED) {
         const res = await fetch(`/mock/discover_users_page_0.json`);
         if (!res.ok) throw new Error("Failed to fetch mock discover users");
         return await res.json();
       }
       const res = await fetch(
-        `${API_URL}/api/users/get-discover?cursor=${pageParam ?? ""}&limit=20`
+        `${API_URL}/api/users/get-discover?cursor=${pageParam ?? 0}&limit=20`
       );
       if (!res.ok) throw new Error("Failed to fetch users");
 
@@ -25,6 +25,6 @@ export function useInfiniteUsers() {
       return result;
     },
     getNextPageParam: (lastPage) => lastPage.nextCursor,
-    initialPageParam: Date.now() + 60_000,
+    initialPageParam: 0,
   });
 }

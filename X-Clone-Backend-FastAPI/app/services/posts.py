@@ -18,7 +18,8 @@ class PostsService:
     def _collect_post_lists(self, post_id: int) -> tuple[list[int], list[int], list[int], list[int], list[PostMediaDTO], Optional[int], Optional[int]]:
         liked_by = [row.liker_id for row in self.db.query(Like).filter(Like.post_id == post_id).all()]
         bookmarked_by = [row.bookmarked_by for row in self.db.query(Bookmark).filter(Bookmark.bookmarked_post == post_id).all()]
-        replies: list[int] = []
+        # Replies are posts whose parent_id equals this post's id
+        replies: list[int] = [r[0] for r in self.db.execute(select(Post.id).where(Post.parent_id == post_id)).all()]
         retweeted_by = [row.retweeter_id for row in self.db.query(Retweet).filter(Retweet.reference_id == post_id).all()]
         post_media: list[PostMediaDTO] = []
         poll_id: Optional[int] = None
