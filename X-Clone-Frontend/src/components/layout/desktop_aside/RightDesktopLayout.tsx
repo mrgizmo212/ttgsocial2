@@ -20,7 +20,7 @@ export function RightDesktopLayout() {
     <div className="hidden xl:flex xl:flex-col gap-4 px-10 md:items-start py-3 xl:w-2/3">
       {!currentUser && (
         <AsideContainer>
-          <p className="text-xl font-bold">New to X?</p>
+          <p className="text-xl font-bold">New to TTG</p>
           <p className="text-twitterTextAlt text-xs">
             Sign up now to get your own personalized timeline!
           </p>

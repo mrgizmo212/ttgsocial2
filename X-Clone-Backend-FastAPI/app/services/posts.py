@@ -9,6 +9,8 @@ from ..models import Post, Like, Bookmark, Retweet
 from ..models.post_media import PostMedia
 from ..schemas.post import PostDTO, PostMediaDTO
 from ..storage.local import LocalStorage
+from ..storage.supabase import SupabaseStorage
+from ..config import get_settings
 
 
 class PostsService:
@@ -78,9 +80,12 @@ class PostsService:
         # Save images if present
         media_dtos: list[PostMediaDTO] = []
         if images:
-            storage = LocalStorage()
+            settings = get_settings()
+            storage = (
+                SupabaseStorage() if settings.storage_provider == "supabase" else LocalStorage()
+            )
             for file in images:
-                file_name, url = storage.save(file)
+                file_name, url = storage.save(file, user_id=user_id) if isinstance(storage, SupabaseStorage) else storage.save(file)
                 media = PostMedia(post_id=post.id, file_name=file_name, mime_type=getattr(file, "content_type", None), url=url)
                 self.db.add(media)
                 self.db.commit()

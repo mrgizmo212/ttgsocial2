@@ -1,5 +1,4 @@
 import type { ModalType } from "../../types/ModalType.ts";
-import { FaXTwitter } from "react-icons/fa6";
 import { GoogleAuthButton } from "../common/buttons/GoogleAuthButton.tsx";
 import { HorizontalStripedText } from "../common/HorizontalStripedText.tsx";
 import { TermsAndConditions } from "./TermsAndConditions.tsx";
@@ -14,7 +13,7 @@ function SignupView({ setToggle }: SignUpViewProps) {
   return (
     <div className="w-full h-full flex flex-col border text-twitterText rounded-4xl p-8 items-center gap-6 bg-(--background-main)">
       <>
-        <FaXTwitter className="text-4xl" />
+        <img src="/icon-charts.png" alt="TTG Social" className="h-8 w-8" />
 
         <p className="text-xl font-bold text-center">Create an account</p>
 

@@ -5,6 +5,7 @@ import { HeaderContentContext } from "../../context/HeaderContentProvider.tsx";
 import { useInfiniteFeed } from "../../hooks/queries/useInfiniteFeed.tsx";
 import type { FeedType } from "../../types/FeedType.ts";
 import ComposeTweet from "../input/ComposeTweet.tsx";
+import { UseTempAccountButton } from "../common/buttons/UseTempAccountButton.tsx";
 import { useCurrentUser } from "../../hooks/auth/useCurrentUser.tsx";
 
 function HomePage() {
@@ -45,20 +46,32 @@ function HomePage() {
         </div>
       )}
       <div className="h-full flex flex-col grow w-full scrollbar-blue overflow-y-auto">
-        {currentUser && (
-          <div className="hidden xl:flex xl:w-full">
-            <ComposeTweet />
+        {currentUser ? (
+          <>
+            <div className="hidden xl:flex xl:w-full">
+              <ComposeTweet />
+            </div>
+            <Feed
+              tabType={activeTab}
+              fetchNextPage={fetchNextPage}
+              hasNextPage={hasNextPage}
+              isLoading={isLoading}
+              isFetchingNextPage={isFetchingNextPage}
+              key={activeTab}
+              postIdsArray={postIds}
+            />
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center p-6">
+            <div className="max-w-md w-full border border-twitterBorder rounded-2xl p-6 bg-(--background-main)">
+              <p className="text-2xl font-bold text-white mb-2">Welcome to TTG</p>
+              <p className="text-twitterTextAlt mb-4">
+                Sign in to get your personalized timeline. You can also try a temporary account to explore right away.
+              </p>
+              <UseTempAccountButton />
+            </div>
           </div>
         )}
-        <Feed
-          tabType={activeTab}
-          fetchNextPage={fetchNextPage}
-          hasNextPage={hasNextPage}
-          isLoading={isLoading}
-          isFetchingNextPage={isFetchingNextPage}
-          key={activeTab}
-          postIdsArray={postIds}
-        />
       </div>
     </div>
   );

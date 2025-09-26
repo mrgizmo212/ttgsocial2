@@ -37,6 +37,13 @@ class Settings(BaseSettings):
     # Storage (media)
     storage_base_path: str = "./uploads"
     storage_public_base_url: str = "http://localhost:8080/media"
+    storage_provider: str = "local"  # "local" | "supabase"
+
+    # Supabase (optional)
+    supabase_url: str | None = None
+    supabase_anon_key: str | None = None
+    supabase_service_role: str | None = None
+    supabase_bucket: str = "media"
 
 
 @lru_cache(maxsize=1)
