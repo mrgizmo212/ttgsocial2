@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 
 from ..models import User, Follow
 from ..schemas.user import UserDTO
+from ..storage.local import LocalStorage
+from fastapi import UploadFile
 
 
 class UsersService:
@@ -88,5 +90,50 @@ class UsersService:
             if last_user and last_user.created_at:
                 next_cursor = int(last_user.created_at.timestamp() * 1000)
         return {"users": ids, "nextCursor": next_cursor}
+
+    def update_user_profile(
+        self,
+        user_id: int,
+        display_name: Optional[str],
+        username: Optional[str],
+        bio: Optional[str],
+        profile_picture: Optional[UploadFile] = None,
+        banner_image: Optional[UploadFile] = None,
+    ) -> UserDTO:
+        user = self.db.get(User, user_id)
+        if not user:
+            raise ValueError("User not found")
+
+        # Username uniqueness check (if changed)
+        if username and username != user.username:
+            existing = (
+                self.db.execute(select(User).where(User.username == username)).scalars().first()
+            )
+            if existing and existing.id != user_id:
+                raise ValueError("Username already exists")
+
+        if username:
+            user.username = username
+
+        if display_name is not None:
+            user.display_name = display_name
+
+        if bio is not None:
+            user.bio = bio
+
+        storage = LocalStorage()
+        if profile_picture is not None and getattr(profile_picture, "filename", None):
+            _, url = storage.save(profile_picture)
+            user.profile_picture_url = url
+
+        if banner_image is not None and getattr(banner_image, "filename", None):
+            _, url = storage.save(banner_image)
+            user.banner_image_url = url
+
+        self.db.add(user)
+        self.db.commit()
+        self.db.refresh(user)
+
+        return self.to_dto(user)
 
 

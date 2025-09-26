@@ -166,9 +166,11 @@ function MobileMainDrawer({ setDrawerOpen }: MobileMainDrawerProps) {
             </DrawerNavigationPair>
           </div>
 
-          <DrawerNavigationPair name={"Log Out"} setDrawerOpen={setDrawerOpen}>
-            <HeroIcon iconName="PowerIcon" className="h-7 w-7" solid={false} />
-          </DrawerNavigationPair>
+          {currentUser && (
+            <DrawerNavigationPair name={"Log Out"} setDrawerOpen={setDrawerOpen}>
+              <HeroIcon iconName="PowerIcon" className="h-7 w-7" solid={false} />
+            </DrawerNavigationPair>
+          )}
         </div>
       </div>
     </motion.div>,

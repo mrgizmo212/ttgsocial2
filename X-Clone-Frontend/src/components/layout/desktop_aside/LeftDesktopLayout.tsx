@@ -121,9 +121,17 @@ export function LeftDesktopLayout() {
           </DrawerNavigationPair>
         </div>
 
-        <DrawerNavigationPair name={"Log Out"}>
-          <HeroIcon iconName="PowerIcon" className="h-7 w-7" solid={false} />
-        </DrawerNavigationPair>
+        {currentUser && (
+          <DrawerNavigationPair name={"Log Out"}>
+            <HeroIcon iconName="PowerIcon" className="h-7 w-7" solid={false} />
+          </DrawerNavigationPair>
+        )}
+
+        {!currentUser && (
+          <DrawerNavigationPair name={"Login / Register"}>
+            <HeroIcon iconName="ArrowRightOnRectangleIcon" className="h-7 w-7" />
+          </DrawerNavigationPair>
+        )}
       </div>
     </div>
   );

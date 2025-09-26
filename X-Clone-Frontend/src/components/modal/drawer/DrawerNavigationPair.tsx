@@ -5,6 +5,7 @@ import { useModal } from "../../../context/ModalProvider";
 import { useCurrentUser } from "../../../hooks/auth/useCurrentUser";
 import { useLogout } from "../../../hooks/auth/useLogout";
 
+
 type DrawerNavigationPairProps = {
   children: ReactNode;
   name: string;
@@ -45,6 +46,8 @@ function DrawerNavigationPair({
 
     if (name == "Log Out" && canNavigateAsUser) {
       logout();
+    } else if (name === "Login / Register" && !currentUser) {
+      setModalType("login");
     } else if (routePath && canNavigateAsUser) {
       navigate(routePath);
     } else {
