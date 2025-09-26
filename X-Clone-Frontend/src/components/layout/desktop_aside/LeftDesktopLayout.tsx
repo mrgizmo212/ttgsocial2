@@ -62,9 +62,9 @@ export function LeftDesktopLayout() {
           />
         </DrawerNavigationPair>
 
-        <DrawerNavigationPair name={"Messages"} routePath="/messages">
+        {/* <DrawerNavigationPair name={"Messages"} routePath="/messages">
           <HeroIcon iconName="EnvelopeIcon" className="h-7 w-7" />
-        </DrawerNavigationPair>
+        </DrawerNavigationPair> */}
 
         <div
           onClick={() => setModalType("feedback")}

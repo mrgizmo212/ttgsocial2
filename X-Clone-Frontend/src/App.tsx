@@ -13,7 +13,7 @@ import { HeaderContentProvider } from "./context/HeaderContentProvider.tsx";
 import { Toaster, type DefaultToastOptions } from "react-hot-toast";
 import AboutPage from "./components/pages/AboutPage.tsx";
 import ExplorePage from "./components/pages/ExplorePage.tsx";
-import MessagesPage from "./components/pages/MessagesPage.tsx";
+// import MessagesPage from "./components/pages/MessagesPage.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GOOGLE_CLIENT_ID, GOOGLE_ENABLED, BACKEND_CONFIGURED } from "./constants/env.ts";
 import { BackendConfigBanner } from "./components/layout/BackendConfigBanner";
@@ -80,7 +80,7 @@ function App() {
 
                       <Route path="explore" element={<ExplorePage />} />
 
-                      <Route path="messages" element={<MessagesPage />} />
+                      {/* <Route path="messages" element={<MessagesPage />} /> */}
 
                       <Route
                         path="notifications"
@@ -132,7 +132,7 @@ function App() {
 
                     <Route path="explore" element={<ExplorePage />} />
 
-                  <Route path="messages" element={<MessagesPage />} />
+                  {/* <Route path="messages" element={<MessagesPage />} /> */}
 
                     <Route
                       path="notifications"

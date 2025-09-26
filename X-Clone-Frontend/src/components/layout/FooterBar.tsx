@@ -49,13 +49,13 @@ function FooterBar() {
             </div>
           )}
         </div>
-        <div className="w-full h-full flex items-center justify-center">
+        {/* <div className="w-full h-full flex items-center justify-center">
           <HeroIcon
             iconName="EnvelopeIcon"
             className="w-7 h-7"
             solid={location.pathname === `/messages`}
           />
-        </div>
+        </div> */}
 
         {currentUser && <ComposePostMobileButton />}
       </div>
