@@ -29,7 +29,7 @@ def upgrade() -> None:
         sa.Column("display_name", sa.String(length=255), nullable=True),
         sa.Column("profile_picture_url", sa.String(length=1024), nullable=True),
         sa.Column("banner_image_url", sa.String(length=1024), nullable=True),
-        sa.Column("verified", sa.Boolean(), nullable=False, server_default=sa.text("0")),
+        sa.Column("verified", sa.Boolean(), nullable=False, server_default=sa.text("false")),
         sa.Column("bio", sa.String(length=2048), nullable=True),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=True),
         sa.Column("pinned_post_id", sa.Integer(), nullable=True),
@@ -94,7 +94,7 @@ def upgrade() -> None:
         sa.Column("type", sa.String(length=64), nullable=False),
         sa.Column("reference_id", sa.Integer(), nullable=True),
         sa.Column("text", sa.String(length=1024), nullable=True),
-        sa.Column("seen", sa.Boolean(), nullable=False, server_default=sa.text("0")),
+        sa.Column("seen", sa.Boolean(), nullable=False, server_default=sa.text("false")),
         sa.Column("created_at", sa.TIMESTAMP(), nullable=True),
     )
 
