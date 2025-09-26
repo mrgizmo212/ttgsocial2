@@ -44,7 +44,6 @@ export const useInfiniteFeed = (type: FeedType, userId?: number) => {
       if (!res.ok) throw new Error("Failed to fetch paginated post IDs");
 
       const response = await res.json();
-      console.log("INFINITE PAGE RES: ", response);
       return response;
     },
     initialPageParam: !!userId && type == "For You" ? 0 : Date.now() + 60_000,
