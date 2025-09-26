@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { API_URL } from "../../../constants/env.ts";
+import { API_URL, BACKEND_CONFIGURED } from "../../../constants/env.ts";
 import { useModal } from "../../../context/ModalProvider.tsx";
 
 export function UseTempAccountButton() {
@@ -27,10 +27,10 @@ export function UseTempAccountButton() {
 
   return (
     <div
-      onClick={() => authenticateTempUser()}
+      onClick={() => BACKEND_CONFIGURED && authenticateTempUser()}
       className={`hover:cursor-pointer hover:bg-(--color-main)/75 w-full bg-(--color-main) text-twitterText flex items-center gap-2 justify-center h-10 rounded-full`}
     >
-      <p className="">Use a temporary account</p>
+      <p className="">{BACKEND_CONFIGURED ? "Use a temporary account" : "Backend not configured"}</p>
     </div>
   );
 }

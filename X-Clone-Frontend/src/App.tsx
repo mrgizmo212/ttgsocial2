@@ -13,8 +13,10 @@ import { HeaderContentProvider } from "./context/HeaderContentProvider.tsx";
 import { Toaster, type DefaultToastOptions } from "react-hot-toast";
 import AboutPage from "./components/pages/AboutPage.tsx";
 import ExplorePage from "./components/pages/ExplorePage.tsx";
+import MessagesPage from "./components/pages/MessagesPage.tsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GOOGLE_CLIENT_ID } from "./constants/env.ts";
+import { GOOGLE_CLIENT_ID, GOOGLE_ENABLED, BACKEND_CONFIGURED } from "./constants/env.ts";
+import { BackendConfigBanner } from "./components/layout/BackendConfigBanner";
 import { LeftDesktopLayout } from "./components/layout/desktop_aside/LeftDesktopLayout.tsx";
 import { RightDesktopLayout } from "./components/layout/desktop_aside/RightDesktopLayout.tsx";
 import { useEffect } from "react";
@@ -51,7 +53,60 @@ function App() {
 
   return (
     <Router>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      {GOOGLE_ENABLED ? (
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <ModalProvider>
+            <HeaderContentProvider>
+              <ModalManager />
+
+              <div className="xl:flex 2xl:px-60 xl:px-20 bg-(--background-main) xl:justify-between">
+                <LeftDesktopLayout />
+
+                <div className="xl:mt-3 overscroll-y-contain no-scrollbar w-dvw h-dvh max-h-dvh max-w-dvw xl:w-full xl:bg-none bg-[var(--background-main)] text-[var(--color-main)] transition-colors duration-300 flex flex-col">
+                  <div className="">
+                    {!BACKEND_CONFIGURED && <BackendConfigBanner />}
+                    <Header />
+                  </div>
+
+                  <div className="flex-grow overflow-y-hidden flex flex-col bg-(--background-main)">
+                    <Routes>
+                      <Route path="" element={<HomePage />} />
+
+                      <Route path="profile/:ID" element={<ProfilePage />} />
+
+                      <Route path="tweet/:postId" element={<FullTweet />} />
+
+                      <Route path="bookmarks" element={<BookmarkPage />} />
+
+                      <Route path="explore" element={<ExplorePage />} />
+
+                      <Route path="messages" element={<MessagesPage />} />
+
+                      <Route
+                        path="notifications"
+                        element={<NotificationPage />}
+                      />
+
+                      <Route path="about" element={<AboutPage />} />
+                    </Routes>
+                    <Toaster
+                      position="bottom-center"
+                      toastOptions={toastOptions}
+                      containerClassName="mb-12 xs:mb-0"
+                    />
+                  </div>
+
+                  <div className="xl:hidden">
+                    <FooterBar />
+                  </div>
+                </div>
+
+                <RightDesktopLayout />
+              </div>
+            </HeaderContentProvider>
+          </ModalProvider>
+        </GoogleOAuthProvider>
+      ) : (
         <ModalProvider>
           <HeaderContentProvider>
             <ModalManager />
@@ -60,9 +115,10 @@ function App() {
               <LeftDesktopLayout />
 
               <div className="xl:mt-3 overscroll-y-contain no-scrollbar w-dvw h-dvh max-h-dvh max-w-dvw xl:w-full xl:bg-none bg-[var(--background-main)] text-[var(--color-main)] transition-colors duration-300 flex flex-col">
-                <div className="">
-                  <Header />
-                </div>
+                  <div className="">
+                    {!BACKEND_CONFIGURED && <BackendConfigBanner />}
+                    <Header />
+                  </div>
 
                 <div className="flex-grow overflow-y-hidden flex flex-col bg-(--background-main)">
                   <Routes>
@@ -75,6 +131,8 @@ function App() {
                     <Route path="bookmarks" element={<BookmarkPage />} />
 
                     <Route path="explore" element={<ExplorePage />} />
+
+                  <Route path="messages" element={<MessagesPage />} />
 
                     <Route
                       path="notifications"
@@ -99,7 +157,7 @@ function App() {
             </div>
           </HeaderContentProvider>
         </ModalProvider>
-      </GoogleOAuthProvider>
+      )}
     </Router>
   );
 }

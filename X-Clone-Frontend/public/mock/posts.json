@@ -1,0 +1,64 @@
+[
+  {
+    "id": 101,
+    "userId": 1,
+    "text": "Hello world from mock backend!",
+    "createdAt": "2025-09-26T12:00:00.000Z",
+    "likedBy": [2],
+    "bookmarkedBy": [],
+    "replies": [],
+    "retweetedBy": [],
+    "postMedia": [],
+    "pollExpiryTimeStamp": "2025-12-31T23:59:59.000Z"
+  },
+  {
+    "id": 102,
+    "userId": 2,
+    "text": "Designing UI while backend is booting.",
+    "createdAt": "2025-09-26T12:05:00.000Z",
+    "likedBy": [],
+    "bookmarkedBy": [],
+    "replies": [],
+    "retweetedBy": [],
+    "postMedia": [],
+    "pollExpiryTimeStamp": "2025-12-31T23:59:59.000Z"
+  },
+  {
+    "id": 103,
+    "userId": 3,
+    "text": "Another mock post",
+    "createdAt": "2025-09-26T12:10:00.000Z",
+    "likedBy": [],
+    "bookmarkedBy": [],
+    "replies": [],
+    "retweetedBy": [],
+    "postMedia": [],
+    "pollExpiryTimeStamp": "2025-12-31T23:59:59.000Z"
+  },
+  {
+    "id": 104,
+    "userId": 1,
+    "text": "Mock media soon",
+    "createdAt": "2025-09-26T12:15:00.000Z",
+    "likedBy": [],
+    "bookmarkedBy": [],
+    "replies": [],
+    "retweetedBy": [],
+    "postMedia": [],
+    "pollExpiryTimeStamp": "2025-12-31T23:59:59.000Z"
+  },
+  {
+    "id": 105,
+    "userId": 2,
+    "text": "Fifth mock post",
+    "createdAt": "2025-09-26T12:20:00.000Z",
+    "likedBy": [],
+    "bookmarkedBy": [],
+    "replies": [],
+    "retweetedBy": [],
+    "postMedia": [],
+    "pollExpiryTimeStamp": "2025-12-31T23:59:59.000Z"
+  }
+]
+
+

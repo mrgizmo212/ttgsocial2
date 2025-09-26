@@ -1,0 +1,7 @@
+[
+  { "id": 201, "senderId": 2, "receiverId": 1, "referenceId": 101, "text": "liked your post", "type": "like", "createdAt": "2025-09-26T12:30:00.000Z", "seen": false },
+  { "id": 202, "senderId": 3, "receiverId": 1, "referenceId": 103, "text": "reposted your post", "type": "repost", "createdAt": "2025-09-26T12:35:00.000Z", "seen": false },
+  { "id": 203, "senderId": 2, "receiverId": 1, "referenceId": 105, "text": "replied to your post", "type": "reply", "createdAt": "2025-09-26T12:40:00.000Z", "seen": true }
+]
+
+

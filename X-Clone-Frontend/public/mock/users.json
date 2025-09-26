@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "username": "mockuser1",
+    "email": "mock1@example.com",
+    "displayName": "Mock User One",
+    "bio": "This is mock user one.",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "posts": [101, 104],
+    "replies": [],
+    "likedPosts": [101],
+    "bookmarkedPosts": [],
+    "followers": [2],
+    "following": [2,3],
+    "retweets": [],
+    "profilePictureUrl": "",
+    "bannerImageUrl": "",
+    "pinnedPostId": null,
+    "verified": false
+  },
+  {
+    "id": 2,
+    "username": "mockuser2",
+    "email": "mock2@example.com",
+    "displayName": "Mock User Two",
+    "bio": "This is mock user two.",
+    "createdAt": "2025-01-02T00:00:00.000Z",
+    "posts": [102, 105],
+    "replies": [],
+    "likedPosts": [],
+    "bookmarkedPosts": [],
+    "followers": [1],
+    "following": [1],
+    "retweets": [],
+    "profilePictureUrl": "",
+    "bannerImageUrl": "",
+    "pinnedPostId": null,
+    "verified": true
+  },
+  {
+    "id": 3,
+    "username": "mockuser3",
+    "email": "mock3@example.com",
+    "displayName": "Mock User Three",
+    "bio": "This is mock user three.",
+    "createdAt": "2025-01-03T00:00:00.000Z",
+    "posts": [103],
+    "replies": [],
+    "likedPosts": [],
+    "bookmarkedPosts": [],
+    "followers": [],
+    "following": [],
+    "retweets": [],
+    "profilePictureUrl": "",
+    "bannerImageUrl": "",
+    "pinnedPostId": null,
+    "verified": false
+  }
+]
+
+

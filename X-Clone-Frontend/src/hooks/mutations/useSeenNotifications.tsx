@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_URL } from "../../constants/env.ts";
+import { API_URL, BACKEND_CONFIGURED } from "../../constants/env.ts";
 
 export const useUnseenNotificationIds = () => {
   return useQuery<number[]>({
     queryKey: ["unseenNotifications"],
     queryFn: async () => {
+      if (!BACKEND_CONFIGURED) {
+        return [];
+      }
       const res = await fetch(`${API_URL}/api/notifications/get-unseen`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,

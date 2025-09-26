@@ -1,9 +1,14 @@
 import { create, windowScheduler } from "@yornaath/batshit";
 import type { Post } from "../../types/Post.ts";
-import { API_URL } from "../../constants/env.ts";
+import { API_URL, BACKEND_CONFIGURED } from "../../constants/env.ts";
 
 export const postBatcher = create<Post, number>({
   fetcher: async (ids: number[]) => {
+    if (!BACKEND_CONFIGURED) {
+      const res = await fetch(`/mock/posts.json`);
+      if (!res.ok) throw new Error("Failed to fetch mock posts");
+      return await res.json();
+    }
     const res = await fetch(`${API_URL}/api/posts/get-posts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

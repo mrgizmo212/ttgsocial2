@@ -1,4 +1,4 @@
-import { FaXTwitter } from "react-icons/fa6";
+// removed FaXTwitter icon in favor of image logo
 import DrawerNavigationPair from "../../modal/drawer/DrawerNavigationPair";
 import { HeroIcon } from "../../common/icons/HeroIcon.tsx";
 import { useModal } from "../../../context/ModalProvider.tsx";
@@ -17,9 +17,11 @@ export function LeftDesktopLayout() {
     <div className="hidden xl:flex items-end xl:flex-col xl:px-15 2xl:px-20 xl:w-2/3 py-3">
       <div className="flex h-fit flex-col py-2">
         <div className="flex justify-start mb-4">
-          <FaXTwitter
-            className="text-white text-4xl hover:cursor-pointer"
+          <img
+            src="/icon-charts.png"
+            alt="Logo"
             onClick={() => navigate("/")}
+            className="h-10 w-10 hover:cursor-pointer"
           />
         </div>
 
@@ -60,7 +62,7 @@ export function LeftDesktopLayout() {
           />
         </DrawerNavigationPair>
 
-        <DrawerNavigationPair name={"Messages"} disabled={true}>
+        <DrawerNavigationPair name={"Messages"} routePath="/messages">
           <HeroIcon iconName="EnvelopeIcon" className="h-7 w-7" />
         </DrawerNavigationPair>
 

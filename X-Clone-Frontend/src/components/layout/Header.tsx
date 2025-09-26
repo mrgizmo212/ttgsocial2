@@ -1,4 +1,4 @@
-import { FaXTwitter } from "react-icons/fa6";
+// removed FaXTwitter icon in favor of image logo
 import ProfilePic from "../user/ProfilePic.tsx";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -66,7 +66,12 @@ function Header() {
         {!headerContent ? (
           <>
             <div className="h-full w-full flex relative items-center justify-center text-xl font-bold">
-              <FaXTwitter onClick={() => navigate("/")} className="text-2xl" />
+              <img
+                src="/icon-charts.png"
+                alt="Logo"
+                onClick={() => navigate("/")}
+                className="h-8 w-8 hover:cursor-pointer"
+              />
             </div>
             <div className="h-full w-full flex relative items-center justify-end"></div>
           </>

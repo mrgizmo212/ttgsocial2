@@ -7,6 +7,7 @@ import { HorizontalStripedText } from "../../common/HorizontalStripedText";
 import { UserSearchResult } from "../../pages/UserSearchResult";
 import { AsideContainer } from "./AsideContainer";
 import { useCurrentUser } from "../../../hooks/auth/useCurrentUser.tsx";
+import { GOOGLE_ENABLED } from "../../../constants/env.ts";
 
 export function RightDesktopLayout() {
   const { data: currentUser } = useCurrentUser();
@@ -25,8 +26,10 @@ export function RightDesktopLayout() {
           </p>
 
           <div className="w-full flex flex-col gap-4 pt-4">
-            <GoogleAuthButton>Sign up with Google</GoogleAuthButton>
-            <HorizontalStripedText>OR</HorizontalStripedText>
+            {GOOGLE_ENABLED && (
+              <GoogleAuthButton>Sign up with Google</GoogleAuthButton>
+            )}
+            {GOOGLE_ENABLED && <HorizontalStripedText>OR</HorizontalStripedText>}
             <UseTempAccountButton />
             <TermsAndConditions />
           </div>
@@ -53,44 +56,49 @@ export function RightDesktopLayout() {
           <AsideContainer disabled={true}>
             <p className="text-xl font-bold">What's Happening?</p>
             <div className="w-full flex flex-col gap-4 pt-4">
-              <div className="w-full flex">
+              <div
+                className="w-full flex hover:cursor-pointer hover:bg-white/5 rounded-md p-2"
+                onClick={() => navigate("/explore")}
+              >
                 <div className="w-full flex flex-col">
-                  <p className="text-twitterBorder">
-                    Trending in the Netherlands
-                  </p>
-                  <p className="font-bold">Hague Summit</p>
+                  <p className="text-twitterBorder">Trending in TTG Main Chat</p>
+                  <p className="font-bold">SugesFeet</p>
                 </div>
               </div>
-              <div className="w-full flex">
+              <div
+                className="w-full flex hover:cursor-pointer hover:bg-white/5 rounded-md p-2"
+                onClick={() => navigate("/explore")}
+              >
                 <div className="w-full flex flex-col">
-                  <p className="text-twitterBorder">
-                    Trending in the Netherlands
-                  </p>
-                  <p className="font-bold">Mark Rutte</p>
+                  <p className="text-twitterBorder">Trending in ClockTower</p>
+                  <p className="font-bold">TripleDigitWinner</p>
                 </div>
               </div>
-              <div className="w-full flex">
+              <div
+                className="w-full flex hover:cursor-pointer hover:bg-white/5 rounded-md p-2"
+                onClick={() => navigate("/explore")}
+              >
                 <div className="w-full flex flex-col">
-                  <p className="text-twitterBorder">
-                    Trending in the Netherlands
-                  </p>
+                  <p className="text-twitterBorder">Trending in Crypto</p>
                   <p className="font-bold">Bitcoin</p>
                 </div>
               </div>
-              <div className="w-full flex">
+              <div
+                className="w-full flex hover:cursor-pointer hover:bg-white/5 rounded-md p-2"
+                onClick={() => navigate("/explore")}
+              >
                 <div className="w-full flex flex-col">
-                  <p className="text-twitterBorder">
-                    Trending in the Netherlands
-                  </p>
+                  <p className="text-twitterBorder">Trending in the News</p>
                   <p className="font-bold">Donald Trump</p>
                 </div>
               </div>
-              <div className="w-full flex">
+              <div
+                className="w-full flex hover:cursor-pointer hover:bg-white/5 rounded-md p-2"
+                onClick={() => navigate("/explore")}
+              >
                 <div className="w-full flex flex-col">
-                  <p className="text-twitterBorder">
-                    Trending in the Netherlands
-                  </p>
-                  <p className="font-bold">Elon Musk</p>
+                  <p className="text-twitterBorder">Trending in Investing</p>
+                  <p className="font-bold">$NVDA</p>
                 </div>
               </div>
             </div>

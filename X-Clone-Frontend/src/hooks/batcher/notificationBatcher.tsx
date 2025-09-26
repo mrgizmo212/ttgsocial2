@@ -1,9 +1,14 @@
 import { create, windowScheduler } from "@yornaath/batshit";
-import { API_URL } from "../../constants/env.ts";
+import { API_URL, BACKEND_CONFIGURED } from "../../constants/env.ts";
 import type { Notification } from "../../types/Notification.ts";
 
 export const notificationBatcher = create<Notification, number>({
   fetcher: async (ids: number[]) => {
+    if (!BACKEND_CONFIGURED) {
+      const res = await fetch(`/mock/notification_entities.json`);
+      if (!res.ok) throw new Error("Failed to fetch mock notifications");
+      return await res.json();
+    }
     const res = await fetch(`${API_URL}/api/notifications/get-notifications`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

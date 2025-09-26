@@ -1,6 +1,6 @@
 import { useInfiniteQuery, type InfiniteData } from "@tanstack/react-query";
 import type { FeedType } from "../../types/FeedType.ts";
-import { API_URL } from "../../constants/env.ts";
+import { API_URL, BACKEND_CONFIGURED } from "../../constants/env.ts";
 
 export type FeedPage = {
   posts: number[];
@@ -17,6 +17,18 @@ export const useInfiniteFeed = (type: FeedType, userId?: number) => {
   >({
     queryKey: ["feed", type, userId],
     queryFn: async ({ pageParam = 0 }) => {
+      if (!BACKEND_CONFIGURED) {
+        const mockPath =
+          type === "Notifications"
+            ? "/mock/notifications_page_0.json"
+            : type === "Bookmarks"
+            ? "/mock/bookmarks_page_0.json"
+            : "/mock/feed_page_0.json";
+        const res = await fetch(mockPath);
+        if (!res.ok) throw new Error("Failed to load mock feed page");
+        return (await res.json()) as FeedPage;
+      }
+
       const url = new URL(`${API_URL}/api/feed/get-feed-page`);
       url.searchParams.set("type", type);
       url.searchParams.set("cursor", pageParam.toString());

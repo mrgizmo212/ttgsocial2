@@ -4,6 +4,7 @@ import { GoogleAuthButton } from "../common/buttons/GoogleAuthButton.tsx";
 import { HorizontalStripedText } from "../common/HorizontalStripedText.tsx";
 import { TermsAndConditions } from "./TermsAndConditions.tsx";
 import { UseTempAccountButton } from "../common/buttons/UseTempAccountButton.tsx";
+import { GOOGLE_ENABLED } from "../../constants/env.ts";
 
 type SignUpViewProps = {
   setToggle: (type: ModalType) => void;
@@ -17,11 +18,11 @@ function SignupView({ setToggle }: SignUpViewProps) {
 
         <p className="text-xl font-bold text-center">Create an account</p>
 
-        <GoogleAuthButton setToggle={setToggle}>
-          Sign up with Google
-        </GoogleAuthButton>
+        {GOOGLE_ENABLED && (
+          <GoogleAuthButton setToggle={setToggle}>Sign up with Google</GoogleAuthButton>
+        )}
 
-        <HorizontalStripedText> OR </HorizontalStripedText>
+        {GOOGLE_ENABLED && <HorizontalStripedText> OR </HorizontalStripedText>}
 
         <UseTempAccountButton />
 
