@@ -50,18 +50,19 @@ class EdgeRankService:
     def _compute_total_scores(self, post_ranks: List[PostRank], feed_user) -> None:
         # build convenience sets for affinity checks
         following_set: Set[int] = set(feed_user.following)
-        liked_posts_set: Set[int] = set(feed_user.likedPosts)
-        replies_set: Set[int] = set(feed_user.replies)
 
         for pr in post_ranks:
             # own recent post boost (<= 6 hours)
             if self._is_own_recent_post(pr, feed_user):
                 continue
 
+            # author post ids set
+            author_post_ids = self._get_post_ids_by_author(pr.post.user_id)
+
             # affinity
             pr.affinity += self._compute_following_affinity(following_set, pr.post.user_id)
-            pr.affinity += self._compute_has_liked_affinity(liked_posts_set, pr.post.user_id)
-            pr.affinity += self._compute_has_replied_affinity(replies_set, pr.post.user_id)
+            pr.affinity += self._compute_has_liked_affinity(feed_user.id, author_post_ids)
+            pr.affinity += self._compute_has_replied_affinity(feed_user.id, author_post_ids)
 
             # weights
             pr.weight += self._compute_has_media_weight(pr.post.id)
@@ -86,14 +87,32 @@ class EdgeRankService:
     def _compute_following_affinity(self, following_set: Set[int], post_owner_id: int) -> float:
         return 2.0 if post_owner_id in following_set else 1.0
 
-    def _compute_has_liked_affinity(self, liked_posts_set: Set[int], post_owner_id: int) -> float:
-        # approximate: if any liked post belongs to this author
-        # since we don't map post->author quickly here, return small baseline 0
-        return 0.0
+    def _compute_has_liked_affinity(self, feed_user_id: int, author_post_ids: Set[int]) -> float:
+        if not author_post_ids:
+            return 0.0
+        exists = (
+            self.db.query(Like)
+            .filter(Like.liker_id == feed_user_id, Like.post_id.in_(list(author_post_ids)))
+            .limit(1)
+            .count()
+        )
+        return 0.5 if exists else 0.0
 
-    def _compute_has_replied_affinity(self, replies_set: Set[int], post_owner_id: int) -> float:
-        # same approximation as liked affinity for Phase 1
-        return 0.0
+    def _compute_has_replied_affinity(self, feed_user_id: int, author_post_ids: Set[int]) -> float:
+        if not author_post_ids:
+            return 0.0
+        # user has any reply whose parent is an author's post
+        exists = (
+            self.db.query(Post)
+            .filter(Post.user_id == feed_user_id, Post.parent_id.in_(list(author_post_ids)))
+            .limit(1)
+            .count()
+        )
+        return 0.5 if exists else 0.0
+
+    def _get_post_ids_by_author(self, author_id: int) -> Set[int]:
+        rows = self.db.execute(select(Post.id).where(Post.user_id == author_id)).all()
+        return {r[0] for r in rows}
 
     def _compute_has_media_weight(self, post_id: int) -> float:
         has_media = (
