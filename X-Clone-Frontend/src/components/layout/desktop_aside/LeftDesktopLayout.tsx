@@ -87,7 +87,7 @@ export function LeftDesktopLayout() {
         </DrawerNavigationPair>
 
         <a
-          href="https://github.com/jokerhutt"
+          href="https://truetradinggroup.com/member-dashboard"
           target="_blank"
           rel="noopener noreferrer"
           className="flex w-fit h-16 relative text-2xl  text-twitterText items-center gap-4 hover:cursor-pointer"
@@ -97,7 +97,7 @@ export function LeftDesktopLayout() {
             className="h-7 w-7"
             solid={false}
           />
-          <span className="font-bold md:font-medium">GitHub</span>
+          <span className="font-bold md:font-medium">Dashboard</span>
         </a>
 
         <DrawerNavigationPair

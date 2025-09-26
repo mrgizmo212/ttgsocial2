@@ -21,7 +21,19 @@ class PostsService:
         # Replies are posts whose parent_id equals this post's id
         replies: list[int] = [r[0] for r in self.db.execute(select(Post.id).where(Post.parent_id == post_id)).all()]
         retweeted_by = [row.retweeter_id for row in self.db.query(Retweet).filter(Retweet.reference_id == post_id).all()]
-        post_media: list[PostMediaDTO] = []
+        # Include persisted media for this post
+        media_rows = self.db.query(PostMedia).filter(PostMedia.post_id == post_id).all()
+        post_media: list[PostMediaDTO] = [
+            PostMediaDTO(
+                id=m.id,
+                postId=m.post_id,
+                fileName=m.file_name,
+                mimeType=m.mime_type,
+                url=m.url,
+                createdAt=m.created_at,
+            )
+            for m in media_rows
+        ]
         poll_id: Optional[int] = None
         poll_expiry: Optional[int] = None
         return liked_by, bookmarked_by, replies, retweeted_by, post_media, poll_id, poll_expiry

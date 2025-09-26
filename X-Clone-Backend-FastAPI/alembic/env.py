@@ -22,7 +22,9 @@ config = context.config
 
 # Load DB URL from app settings so env/.ini stay in sync
 settings = get_settings()
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Escape % for configparser interpolation
+alembic_url = settings.database_url.replace('%', '%%')
+config.set_main_option("sqlalchemy.url", alembic_url)
 
 # Interpret the config file for Python logging.
 fileConfig(config.config_file_name)  # type: ignore[arg-type]
