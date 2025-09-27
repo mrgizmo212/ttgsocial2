@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from typing import Any, Dict, Optional
+from datetime import datetime
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select, desc
@@ -36,9 +37,11 @@ def get_feed_page(
         # Default chronological
         query = select(Post.id).order_by(desc(Post.created_at)).limit(limit)
         if cursor:
+            # cursor is milliseconds since epoch; convert to UTC datetime for TIMESTAMP compare
+            cursor_dt = datetime.utcfromtimestamp(cursor / 1000.0)
             query = (
                 select(Post.id)
-                .where(Post.created_at <= (cursor))
+                .where(Post.created_at <= cursor_dt)
                 .order_by(desc(Post.created_at))
                 .limit(limit)
             )
